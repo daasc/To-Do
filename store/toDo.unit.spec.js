@@ -82,4 +82,17 @@ describe('toDo', () => {
 
     expect(store.state.toDoList).toHaveLength(0)
   })
+  it('should add comments on task', async () => {
+    const { store } = createStore()
+
+    await store.commit('SET_TODOLIST', { name: 'make a cake' })
+    await store.commit('COMMENTS', {
+      id: store.state.toDoList[0].id,
+      comments: 'hello, add comments',
+    })
+    expect(store.state.toDoList[0].comments).toHaveLength(1)
+    expect(store.state.toDoList[0].comments[0].text).toEqual(
+      'hello, add comments'
+    )
+  })
 })

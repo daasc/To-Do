@@ -8,6 +8,7 @@ export const mutations = {
       name: payload.name,
       done: false,
       id: new Date().getTime(),
+      comments: [],
     })
   },
   SET_DONE: (state, id) => {
@@ -23,6 +24,13 @@ export const mutations = {
   },
   DELETE: (state, id) => {
     state.toDoList = state.toDoList.filter((todo) => todo.id !== id)
+  },
+  COMMENTS: (state, payload) => {
+    const index = state.toDoList.findIndex((todo) => todo.id === payload.id)
+    state.toDoList[index].comments.push({
+      text: payload.comments,
+      date: new Date().getTime(),
+    })
   },
 }
 
