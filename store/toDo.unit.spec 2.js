@@ -26,15 +26,6 @@ describe('toDo', () => {
     store.commit('SET_TODOLIST', { name: 'make a cake' })
     expect(store.state.toDoList).toHaveLength(1)
   })
-  it('should edit an item in toDoList when EDIT_TODOLIST is called', () => {
-    const { store } = createStore()
-    store.commit('SET_TODOLIST', { name: 'make a cake' })
-    store.commit('EDIT_TODOLIST', {
-      name: 'make',
-      id: store.state.toDoList[0].id,
-    })
-    expect(store.state.toDoList[0].name).toEqual('make')
-  })
   it('should mark the task as done when the SET_DONE is called', () => {
     const { store } = createStore()
     store.commit('SET_TODOLIST', { name: 'make a cake' })
@@ -90,52 +81,5 @@ describe('toDo', () => {
     await store.commit('DELETE', store.state.toDoList[0].id)
 
     expect(store.state.toDoList).toHaveLength(0)
-  })
-  it('should add comments on task', async () => {
-    const { store } = createStore()
-
-    await store.commit('SET_TODOLIST', { name: 'make a cake' })
-    await store.commit('COMMENTS', {
-      id: store.state.toDoList[0].id,
-      comments: 'hello, add comments',
-    })
-    expect(store.state.toDoList[0].comments).toHaveLength(1)
-    expect(store.state.toDoList[0].comments[0].text).toEqual(
-      'hello, add comments'
-    )
-  })
-  it('should return the task with the id passed', async () => {
-    const { store } = createStore()
-    await store.commit('SET_TODOLIST', { name: 'make a cake' })
-    const todo = store.getters.getId(store.state.toDoList[0].id)
-    expect(todo.name).toContain('make a cake')
-  })
-
-  it('should delete the comments when DELETE_COMMENTS is called', async () => {
-    const { store } = createStore()
-
-    await store.commit('SET_TODOLIST', { name: 'make a cake' })
-    await store.commit('COMMENTS', {
-      id: store.state.toDoList[0].id,
-      comments: 'hello, add comments',
-    })
-    await store.commit('DELETE_COMMENTS', {
-      date: store.state.toDoList[0].comments[0].date,
-      id: store.state.toDoList[0].id,
-    })
-    expect(store.state.toDoList[0].comments).toHaveLength(0)
-  })
-  it('should edit the comment when EDIT_COMMENTS is called', async () => {
-    const { store } = createStore()
-
-    await store.commit('SET_TODOLIST', { name: 'make a cake' })
-    await store.commit('COMMENTS', {
-      id: store.state.toDoList[0].id,
-      comments: 'hello, add comments',
-    })
-    const date = store.state.toDoList[0].comments[0].date
-    const id = store.state.toDoList[0].id
-    await store.commit('EDIT_COMMENTS', { text: 'hello', date, id })
-    expect(store.state.toDoList[0].comments[0].text).toEqual('hello')
   })
 })
