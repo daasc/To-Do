@@ -1,12 +1,16 @@
 <template>
-  <nav-bar></nav-bar>
+  <div>
+    <nav-bar></nav-bar>
+    <add-task></add-task>
+  </div>
 </template>
 
 <script>
 import NavBar from '@/components/NavBar.vue'
+import AddTask from '~/components/AddTask.vue'
 export default {
   name: 'IndexPage',
-  components: { NavBar },
+  components: { NavBar, AddTask },
 }
 </script>
 <style lang="scss">
