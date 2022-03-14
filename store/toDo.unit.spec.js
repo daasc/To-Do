@@ -50,8 +50,10 @@ describe('toDo', () => {
     await store.commit('SET_TODOLIST', { name: 'make a hotdog' })
     await store.commit('SET_TODOLIST', { name: 'make a noodle' })
     await store.commit('SET_DONE', store.state.toDoList[0].id)
+    await store.commit('SET_DONE', store.state.toDoList[1].id)
+    await store.commit('SET_DONE', store.state.toDoList[2].id)
 
-    expect(store.getters.deeds).toHaveLength(1)
+    expect(store.getters.deeds).toHaveLength(3)
   })
   it('should unmarked the task as done when SET_DONE  is called ', async () => {
     const { store } = createStore()
