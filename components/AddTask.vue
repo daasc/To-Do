@@ -19,7 +19,12 @@
         >
           Add Task
         </button>
-        <button class="button-3 clear" role="button" @click="clear()">
+        <button
+          data-testid="clear"
+          class="button-3 clear"
+          role="button"
+          @click="clear()"
+        >
           Clear
         </button>
       </div>
