@@ -1,3 +1,5 @@
+import { uid } from '@/middleware/uid.js'
+
 export const state = () => ({
   toDoList: [],
 })
@@ -7,7 +9,7 @@ export const mutations = {
     state.toDoList.push({
       name: payload.name,
       done: false,
-      id: new Date().getTime(),
+      id: uid(),
       comments: [],
     })
   },

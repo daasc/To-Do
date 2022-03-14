@@ -1,6 +1,19 @@
 <template>
   <div class="card">
-    <span class="card__name">{{ name }}</span>
+    <div class="card__container">
+      <div class="card__check">
+        <input id="color-1" type="checkbox" name="color" value="color-1" />
+        <label for="color-1">
+          <span>
+            <img
+              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg"
+              alt="Checked Icon"
+            />
+          </span>
+        </label>
+      </div>
+      <span class="card__name">{{ name }}</span>
+    </div>
     <div class="card__actions">
       <div class="card__actions__comments">
         <img src="@/assets/img/comment.png" alt="" />
@@ -33,11 +46,56 @@ export default {
   background-color: beige;
   min-height: 40px;
   justify-content: space-between;
-  .card__name {
-    font-size: 18px;
-    font-weight: bold;
+  .card__container {
     width: 80%;
     padding: 10px;
+    display: flex;
+    .card__check {
+      input[type='checkbox'] {
+        display: none;
+        + label {
+          color: #333;
+          font-family: Arial, sans-serif;
+          font-size: 14px;
+
+          span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin: -1px 4px 0 0;
+            vertical-align: middle;
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            background-repeat: no-repeat;
+            background-position: center;
+            text-align: center;
+            line-height: 25px;
+
+            img {
+              opacity: 0;
+              transition: all 0.3s ease;
+            }
+          }
+        }
+
+        &#color-1 + label span {
+          background-color: #c8c8c8;
+        }
+        &:checked + label span {
+          background-color: #2ecc71 !important;
+        }
+        &:checked + label span img {
+          opacity: 1;
+          width: 15px;
+        }
+      }
+    }
+    .card__name {
+      width: 80%;
+      font-size: 18px;
+      font-weight: bold;
+    }
   }
   .card__actions {
     display: flex;
