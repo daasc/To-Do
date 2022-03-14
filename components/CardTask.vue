@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <span class="card__name">name task</span>
+    <span class="card__name">{{ name }}</span>
     <div class="card__actions">
       <div class="card__actions__comments">
         <img src="@/assets/img/comment.png" alt="" />
@@ -17,6 +17,12 @@
 <script>
 export default {
   name: 'CardTask',
+  props: {
+    name: {
+      type: String,
+      default: '',
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -31,12 +37,13 @@ export default {
     font-size: 18px;
     font-weight: bold;
     width: 80%;
+    padding: 10px;
   }
   .card__actions {
     display: flex;
     width: 20%;
     align-items: center;
-    gap: 10px;
+    justify-content: space-around;
     .card__actions__comments,
     .card__actions__edit,
     .card__actions__delete {

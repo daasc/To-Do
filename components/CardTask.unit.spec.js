@@ -23,6 +23,9 @@ describe('CardTask', () => {
       mocks: {
         $store: store,
       },
+      props: {
+        name: 'new task',
+      },
       localVue,
     })
     return { store, wrapper }

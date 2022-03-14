@@ -2,17 +2,17 @@
   <div>
     <nav-bar></nav-bar>
     <add-task></add-task>
-    <card-task></card-task>
+    <list-task></list-task>
   </div>
 </template>
 
 <script>
 import NavBar from '@/components/NavBar.vue'
 import AddTask from '~/components/AddTask.vue'
-import CardTask from '~/components/CardTask.vue'
+import ListTask from '~/components/ListTask.vue'
 export default {
   name: 'IndexPage',
-  components: { NavBar, AddTask, CardTask },
+  components: { NavBar, AddTask, ListTask },
 }
 </script>
 <style lang="scss">
