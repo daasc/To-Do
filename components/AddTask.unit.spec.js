@@ -32,8 +32,17 @@ describe('AddTask', () => {
     expect(wrapper.vm).toBeDefined()
   })
 
-  it('should mount the component', () => {
+  it('should add new task', async () => {
+    const { wrapper, store } = mountAddTask()
+    const add = wrapper.find('[data-testid="add-task"]')
+    await add.trigger('click')
+
+    expect(store.state.toDo.toDoList).toHaveLength(1)
+  })
+  fit('should clear input', async () => {
     const { wrapper } = mountAddTask()
-    expect(wrapper.vm).toBeDefined()
+    const add = wrapper.find('[data-testid="input"]')
+    await add.setValue('click')
+    expect(add.element.name).toBe('')
   })
 })

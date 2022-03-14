@@ -2,15 +2,26 @@
   <div class="task">
     <div class="group-input">
       <textarea
+        v-model="name"
         class="add-task"
         type="text"
         placeholder="add new task"
         cols="30"
         rows="10"
+        data-testid="input"
       ></textarea>
       <div class="group-button">
-        <button class="button-3 add" role="button">Add Task</button>
-        <button class="button-3 clear" role="button">Clear</button>
+        <button
+          class="button-3 add"
+          role="button"
+          data-testid="add-task"
+          @click="addTask()"
+        >
+          Add Task
+        </button>
+        <button class="button-3 clear" role="button" @click="clear()">
+          Clear
+        </button>
       </div>
     </div>
   </div>
@@ -18,6 +29,20 @@
 <script>
 export default {
   name: 'AddTask',
+  data() {
+    return {
+      name: '',
+    }
+  },
+  methods: {
+    addTask() {
+      this.$store.commit('toDo/SET_TODOLIST', { name: this.name })
+      this.name = ''
+    },
+    clear() {
+      this.name = ''
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -100,8 +125,6 @@ export default {
       width: 40%;
       .add-task {
         width: 100%;
-      }
-      .button-19 {
       }
     }
   }
