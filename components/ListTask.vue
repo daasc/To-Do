@@ -5,8 +5,10 @@
       <span class="list__card__qtd">{{ task.length }} items</span>
       <card-task
         v-for="(item, index) in task"
+        :id="item.id"
         :key="index"
         :name="item.name"
+        :done="item.done"
       ></card-task>
     </div>
   </div>

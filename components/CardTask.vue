@@ -4,7 +4,7 @@
       <div class="card__check">
         <input id="color-1" type="checkbox" name="color" value="color-1" />
         <label for="color-1">
-          <span>
+          <span data-testid="done-task" @click="toDone(id)">
             <img
               src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg"
               alt="Checked Icon"
@@ -12,7 +12,12 @@
           </span>
         </label>
       </div>
-      <span class="card__name">{{ name }}</span>
+      <span
+        class="card__name"
+        data-testid="task-name"
+        :class="{ 'text-done': done }"
+        >{{ name }}</span
+      >
     </div>
     <div class="card__actions">
       <div class="card__actions__comments">
@@ -35,10 +40,26 @@ export default {
       type: String,
       default: '',
     },
+    id: {
+      type: String,
+      default: '',
+    },
+    done: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  methods: {
+    toDone(id) {
+      this.$store.commit('toDo/SET_DONE', id)
+    },
   },
 }
 </script>
 <style lang="scss" scoped>
+.text-done {
+  text-decoration: line-through;
+}
 .card {
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
