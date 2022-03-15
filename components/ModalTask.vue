@@ -13,6 +13,7 @@
             type="button"
             class="btn-close"
             aria-label="Close modal"
+            data-testid="close-modal"
             @click="close"
           >
             x
