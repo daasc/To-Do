@@ -2,7 +2,13 @@
   <div class="card">
     <div class="card__container">
       <div class="card__check">
-        <input id="color-1" type="checkbox" name="color" value="color-1" />
+        <input
+          id="color-1"
+          :class="{ checked: done }"
+          type="checkbox"
+          name="color"
+          value="color-1"
+        />
         <label for="color-1">
           <span data-testid="done-task" @click="toDone(id)">
             <img
@@ -71,6 +77,7 @@ export default {
     width: 80%;
     padding: 10px;
     display: flex;
+    align-items: center;
     .card__check {
       input[type='checkbox'] {
         display: none;
@@ -103,10 +110,10 @@ export default {
         &#color-1 + label span {
           background-color: #c8c8c8;
         }
-        &:checked + label span {
+        &.checked + label span {
           background-color: #2ecc71 !important;
         }
-        &:checked + label span img {
+        &.checked + label span img {
           opacity: 1;
           width: 15px;
         }
