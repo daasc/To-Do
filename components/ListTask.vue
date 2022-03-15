@@ -1,12 +1,19 @@
 <template>
   <div class="list">
     <hr />
+    <div class="filter">
+      <div data-testid="all-task" @click="allTask()">All</div>
+      <div data-testid="active-task" @click="activeTask()">Active</div>
+      <div data-testid="completed-task" @click="completedTask()">Completed</div>
+    </div>
     <div data-testid="qtd-task" class="list__card">
       <span class="list__card__qtd">{{ task.length }} items</span>
       <card-task
         v-for="(item, index) in task"
+        :id="item.id"
         :key="index"
         :name="item.name"
+        :done="item.done"
       ></card-task>
     </div>
   </div>
@@ -16,9 +23,38 @@ import CardTask from './CardTask.vue'
 export default {
   name: 'ListTask',
   components: { CardTask },
+  data() {
+    return {
+      all: true,
+      active: false,
+      completed: false,
+    }
+  },
   computed: {
     task() {
-      return this.$store.state.toDo.toDoList
+      if (this.all) {
+        return this.$store.state.toDo.toDoList
+      } else if (this.active) {
+        return this.$store.getters['toDo/active']
+      }
+      return this.$store.getters['toDo/deeds']
+    },
+  },
+  methods: {
+    allTask() {
+      this.all = true
+      this.active = false
+      this.completed = false
+    },
+    activeTask() {
+      this.all = false
+      this.active = true
+      this.completed = false
+    },
+    completedTask() {
+      this.all = false
+      this.active = false
+      this.completed = true
     },
   },
 }
@@ -31,6 +67,12 @@ export default {
     justify-content: center;
     flex-direction: column;
     margin-top: 10px;
+    .filter {
+      display: flex;
+      width: 40%;
+      margin: 0 auto;
+      justify-content: space-around;
+    }
     hr {
       width: 40%;
     }

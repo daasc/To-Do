@@ -2,9 +2,15 @@
   <div class="card">
     <div class="card__container">
       <div class="card__check">
-        <input id="color-1" type="checkbox" name="color" value="color-1" />
+        <input
+          id="color-1"
+          :class="{ checked: done }"
+          type="checkbox"
+          name="color"
+          value="color-1"
+        />
         <label for="color-1">
-          <span>
+          <span data-testid="done-task" @click="toDone(id)">
             <img
               src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg"
               alt="Checked Icon"
@@ -12,7 +18,12 @@
           </span>
         </label>
       </div>
-      <span class="card__name">{{ name }}</span>
+      <span
+        class="card__name"
+        data-testid="task-name"
+        :class="{ 'text-done': done }"
+        >{{ name }}</span
+      >
     </div>
     <div class="card__actions">
       <div class="card__actions__comments">
@@ -21,7 +32,11 @@
       <div class="card__actions__edit">
         <img src="@/assets/img/editing.png" alt="" />
       </div>
-      <div class="card__actions__delete">
+      <div
+        data-testid="delete-task"
+        class="card__actions__delete"
+        @click="remove(id)"
+      >
         <img src="@/assets/img/bin.png" alt="" />
       </div>
     </div>
@@ -35,10 +50,29 @@ export default {
       type: String,
       default: '',
     },
+    id: {
+      type: String,
+      default: '',
+    },
+    done: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  methods: {
+    toDone(id) {
+      this.$store.commit('toDo/SET_DONE', id)
+    },
+    remove(id) {
+      this.$store.commit('toDo/DELETE', id)
+    },
   },
 }
 </script>
 <style lang="scss" scoped>
+.text-done {
+  text-decoration: line-through;
+}
 .card {
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -50,6 +84,7 @@ export default {
     width: 80%;
     padding: 10px;
     display: flex;
+    align-items: center;
     .card__check {
       input[type='checkbox'] {
         display: none;
@@ -82,10 +117,10 @@ export default {
         &#color-1 + label span {
           background-color: #c8c8c8;
         }
-        &:checked + label span {
+        &.checked + label span {
           background-color: #2ecc71 !important;
         }
-        &:checked + label span img {
+        &.checked + label span img {
           opacity: 1;
           width: 15px;
         }

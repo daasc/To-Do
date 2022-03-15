@@ -12,7 +12,12 @@ describe('ListTask', () => {
       store.commit('toDo/SET_TODOLIST', { name: 'make a cake' })
     }
   }
-  const mountListTask = ({ qtd = 0 }) => {
+  const mountListTask = ({
+    qtd = 0,
+    values = {},
+    active = false,
+    completed = false,
+  }) => {
     const localVue = createLocalVue()
     localVue.use(Vuex)
     const store = new Vuex.Store({
@@ -28,9 +33,17 @@ describe('ListTask', () => {
     if (qtd) {
       addTask(store, qtd)
     }
+    if (active || completed) {
+      store.commit('toDo/SET_DONE', store.state.toDo.toDoList[0].id)
+    }
     const wrapper = mount(ListTask, {
       mocks: {
         $store: store,
+      },
+      data() {
+        return {
+          ...values,
+        }
       },
       localVue,
     })
@@ -55,5 +68,38 @@ describe('ListTask', () => {
     const { wrapper } = mountListTask({ qtd: 5 })
     const qtd = wrapper.find('[data-testid="qtd-task"]')
     expect(qtd.text()).toContain('5')
+  })
+  it('should show all tasks', async () => {
+    const { wrapper } = mountListTask({
+      qtd: 5,
+      active: true,
+      values: { all: false, active: false, completed: true },
+    })
+    const all = wrapper.find('[data-testid="all-task"]')
+    await all.trigger('click')
+    const card = wrapper.findAllComponents(CardTask)
+    expect(card).toHaveLength(5)
+  })
+  it('should show all active tasks', async () => {
+    const { wrapper } = mountListTask({
+      qtd: 5,
+      active: true,
+      values: { all: false, active: false, completed: true },
+    })
+    const active = wrapper.find('[data-testid="active-task"]')
+    await active.trigger('click')
+    const card = wrapper.findAllComponents(CardTask)
+    expect(card).toHaveLength(4)
+  })
+  it('should show all completed tasks', async () => {
+    const { wrapper } = mountListTask({
+      qtd: 5,
+      completed: true,
+      values: { all: true, active: false, completed: false },
+    })
+    const all = wrapper.find('[data-testid="completed-task"]')
+    await all.trigger('click')
+    const card = wrapper.findAllComponents(CardTask)
+    expect(card).toHaveLength(1)
   })
 })
