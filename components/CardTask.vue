@@ -32,7 +32,11 @@
       <div class="card__actions__edit">
         <img src="@/assets/img/editing.png" alt="" />
       </div>
-      <div class="card__actions__delete">
+      <div
+        data-testid="delete-task"
+        class="card__actions__delete"
+        @click="remove(id)"
+      >
         <img src="@/assets/img/bin.png" alt="" />
       </div>
     </div>
@@ -58,6 +62,9 @@ export default {
   methods: {
     toDone(id) {
       this.$store.commit('toDo/SET_DONE', id)
+    },
+    remove(id) {
+      this.$store.commit('toDo/DELETE', id)
     },
   },
 }

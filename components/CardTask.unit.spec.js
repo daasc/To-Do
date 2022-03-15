@@ -46,4 +46,11 @@ describe('CardTask', () => {
 
     expect(store.state.toDo.toDoList[0].done).toBe(true)
   })
+  it('should delete task when delete button is clicked', async () => {
+    const { wrapper, store } = await mountCardTask({ task: true })
+    const remove = wrapper.find('[data-testid="delete-task"]')
+    await remove.trigger('click')
+
+    expect(store.state.toDo.toDoList).toHaveLength(0)
+  })
 })
