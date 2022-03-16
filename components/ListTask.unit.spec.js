@@ -1,8 +1,10 @@
 /* eslint-disable import/no-named-as-default-member */
 import { createLocalVue, mount } from '@vue/test-utils'
+import Vue from 'vue'
 import Vuex from 'vuex'
 import ListTask from '@/components/ListTask'
 import CardTask from '@/components/CardTask'
+import ModalTask from '@/components/ModalTask'
 
 import { state, mutations, getters } from '@/store/toDo'
 
@@ -101,5 +103,37 @@ describe('ListTask', () => {
     await all.trigger('click')
     const card = wrapper.findAllComponents(CardTask)
     expect(card).toHaveLength(1)
+  })
+
+  it('should show modal when comments is called', async () => {
+    const { wrapper } = mountListTask({
+      qtd: 5,
+      completed: true,
+      values: { all: true, active: false, completed: false },
+    })
+    const comments = wrapper.find('[data-testid="comments-task"]')
+    await comments.trigger('click')
+
+    const modal = wrapper.findComponent(ModalTask)
+
+    expect(modal.isVisible()).toBe(true)
+  })
+
+  it('should hide modal when close is called', async () => {
+    const { wrapper } = mountListTask({
+      qtd: 5,
+      completed: true,
+      values: { all: true, active: false, completed: false },
+    })
+    const comments = wrapper.find('[data-testid="comments-task"]')
+    await comments.trigger('click')
+
+    const modal = wrapper.findComponent(ModalTask)
+    expect(modal.isVisible()).toBe(true)
+    await Vue.nextTick()
+    const close = wrapper.find('[data-testid="close-modal"]')
+    await close.trigger('click')
+
+    expect(modal.isVisible()).toBe(false)
   })
 })
