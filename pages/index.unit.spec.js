@@ -3,6 +3,8 @@ import { createLocalVue, mount } from '@vue/test-utils'
 import Vuex from 'vuex'
 import AddTask from '@/components/AddTask'
 import ListTask from '@/components/ListTask'
+import NavBar from '@/components/NavBar'
+
 import Index from '@/pages/index'
 import { state, mutations, getters } from '@/store/toDo'
 
@@ -41,6 +43,11 @@ describe('Index', () => {
     const { wrapper } = mountIndex()
     const add = wrapper.findComponent(AddTask)
     expect(add.vm).toBeDefined()
+  })
+  it('should mount the NavBar component', () => {
+    const { wrapper } = mountIndex()
+    const navbar = wrapper.findComponent(NavBar)
+    expect(navbar.vm).toBeDefined()
   })
   it('should mount the ListTask component', () => {
     const { wrapper } = mountIndex()

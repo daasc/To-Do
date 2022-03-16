@@ -2,9 +2,30 @@
   <div class="list">
     <hr />
     <div class="filter">
-      <div data-testid="all-task" @click="allTask()">All</div>
-      <div data-testid="active-task" @click="activeTask()">Active</div>
-      <div data-testid="completed-task" @click="completedTask()">Completed</div>
+      <div
+        data-testid="all-task"
+        :class="{ 'active-filter': all }"
+        @click="allTask()"
+      >
+        All
+        <hr :class="{ active: all }" />
+      </div>
+      <div
+        data-testid="active-task"
+        :class="{ 'active-filter': active }"
+        @click="activeTask()"
+      >
+        Active
+        <hr :class="{ active: active }" />
+      </div>
+      <div
+        data-testid="completed-task"
+        :class="{ 'active-filter': completed }"
+        @click="completedTask()"
+      >
+        Completed
+        <hr :class="{ active: completed }" />
+      </div>
     </div>
     <div data-testid="qtd-task" class="list__card">
       <span class="list__card__qtd">{{ task.length }} items</span>
@@ -14,20 +35,24 @@
         :key="index"
         :name="item.name"
         :done="item.done"
+        @open="open()"
       ></card-task>
     </div>
+    <modal-task v-show="show" @close="close()"></modal-task>
   </div>
 </template>
 <script>
 import CardTask from './CardTask.vue'
+import ModalTask from './ModalTask.vue'
 export default {
   name: 'ListTask',
-  components: { CardTask },
+  components: { CardTask, ModalTask },
   data() {
     return {
       all: true,
       active: false,
       completed: false,
+      show: false,
     }
   },
   computed: {
@@ -41,6 +66,12 @@ export default {
     },
   },
   methods: {
+    open() {
+      this.show = true
+    },
+    close() {
+      this.show = false
+    },
     allTask() {
       this.all = true
       this.active = false
@@ -60,6 +91,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.active {
+  background-color: #dab88b;
+}
+
 @media (min-width: 0px) {
   .list {
     width: 100%;
@@ -72,6 +107,23 @@ export default {
       width: 40%;
       margin: 0 auto;
       justify-content: space-around;
+
+      div {
+        width: 33.33%;
+        padding: 5px;
+        text-align: center;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #282525;
+        color: white;
+        hr {
+          margin: 0px;
+          height: 3px;
+          border: none;
+        }
+      }
     }
     hr {
       width: 40%;
@@ -86,6 +138,7 @@ export default {
       .list__card__qtd {
         align-self: flex-end;
         margin-bottom: 5px;
+        margin-top: 5px;
       }
     }
   }

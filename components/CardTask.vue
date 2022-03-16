@@ -26,7 +26,11 @@
       >
     </div>
     <div class="card__actions">
-      <div class="card__actions__comments">
+      <div
+        class="card__actions__comments"
+        data-testid="comments-task"
+        @click="open(id)"
+      >
         <img src="@/assets/img/comment.png" alt="" />
       </div>
       <div class="card__actions__edit">
@@ -65,6 +69,9 @@ export default {
     },
     remove(id) {
       this.$store.commit('toDo/DELETE', id)
+    },
+    open(id) {
+      this.$emit('open', { id })
     },
   },
 }
@@ -129,7 +136,6 @@ export default {
     .card__name {
       width: 80%;
       font-size: 18px;
-      font-weight: bold;
     }
   }
   .card__actions {

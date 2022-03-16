@@ -53,4 +53,16 @@ describe('CardTask', () => {
 
     expect(store.state.toDo.toDoList).toHaveLength(0)
   })
+
+  it('should call modal when comments button is clicked', async () => {
+    const { wrapper, store } = await mountCardTask({ task: true })
+    const comments = wrapper.find('[data-testid="comments-task"]')
+    await comments.trigger('click')
+
+    expect(wrapper.emitted().open).toBeTruthy()
+    expect(wrapper.emitted().open.length).toBe(1)
+    expect(wrapper.emitted().open[0]).toEqual([
+      { id: store.state.toDo.toDoList[0].id },
+    ])
+  })
 })
