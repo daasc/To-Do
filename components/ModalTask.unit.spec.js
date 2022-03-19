@@ -62,4 +62,18 @@ describe('ModalTask', () => {
     comments = wrapper.findAllComponents(CardComments)
     expect(comments).toHaveLength(2)
   })
+
+  it('should delete comments when delete button is called', async () => {
+    const { wrapper } = mountModalTask({ task: true, values: { text: '' } })
+    const add = wrapper.find('[data-testid="add-comments"]')
+    const input = wrapper.find('[data-testid="input-comments"]')
+    await input.setValue('dasdadadada')
+    await add.trigger('click')
+    await add.trigger('click')
+    const remove = wrapper.find('[data-testid="delete-comments"]')
+    await remove.trigger('click')
+    const comments = wrapper.findAllComponents(CardComments)
+
+    expect(comments).toHaveLength(1)
+  })
 })

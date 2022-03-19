@@ -38,18 +38,19 @@ export const mutations = {
       date: new Date().toLocaleString('pt-BR', {
         timeZone: 'America/Sao_Paulo',
       }),
+      id: uid(),
     })
   },
   DELETE_COMMENTS: (state, payload) => {
     const index = state.toDoList.findIndex((todo) => todo.id === payload.id)
     state.toDoList[index].comments = state.toDoList[index].comments.filter(
-      (comments) => comments.date !== payload.date
+      (comments) => comments.id !== payload.date
     )
   },
   EDIT_COMMENTS: (state, payload) => {
     const index = state.toDoList.findIndex((todo) => todo.id === payload.id)
     const indexComments = state.toDoList[index].comments.findIndex(
-      (comments) => comments.date === payload.date
+      (comments) => comments.id === payload.date
     )
     state.toDoList[index].comments[indexComments].text = payload.text
   },

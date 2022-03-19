@@ -8,7 +8,7 @@
       <span>
         <img src="@/assets/img/editing.png" alt="" />
       </span>
-      <span>
+      <span data-testid="delete-comments" @click="remove()">
         <img src="@/assets/img/bin.png" alt="" />
       </span>
     </div>
@@ -25,6 +25,15 @@ export default {
     date: {
       type: String,
       default: '',
+    },
+    id: {
+      type: String,
+      default: '',
+    },
+  },
+  methods: {
+    remove() {
+      this.$emit('removeComments', { id: this.id })
     },
   },
 }

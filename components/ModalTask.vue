@@ -24,9 +24,11 @@
           <slot name="body">
             <card-comments
               v-for="(item, index) in comments"
+              :id="item.id"
               :key="index"
               :text="item.text"
               :date="item.date"
+              @removeComments="remove"
             ></card-comments>
           </slot>
         </section>
@@ -81,8 +83,10 @@ export default {
       this.$emit('close')
     },
     addComments() {
-      console.log('ddd', this.id)
       this.$store.commit('toDo/COMMENTS', { id: this.id, comments: this.text })
+    },
+    remove({ id }) {
+      this.$store.commit('toDo/DELETE_COMMENTS', { id: this.id, date: id })
     },
   },
 }
