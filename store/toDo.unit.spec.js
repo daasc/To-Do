@@ -122,7 +122,7 @@ describe('toDo', () => {
       comments: 'hello, add comments',
     })
     await store.commit('DELETE_COMMENTS', {
-      date: store.state.toDoList[0].comments[0].date,
+      date: store.state.toDoList[0].comments[0].id,
       id: store.state.toDoList[0].id,
     })
     expect(store.state.toDoList[0].comments).toHaveLength(0)
@@ -135,7 +135,7 @@ describe('toDo', () => {
       id: store.state.toDoList[0].id,
       comments: 'hello, add comments',
     })
-    const date = store.state.toDoList[0].comments[0].date
+    const date = store.state.toDoList[0].comments[0].id
     const id = store.state.toDoList[0].id
     await store.commit('EDIT_COMMENTS', { text: 'hello', date, id })
     expect(store.state.toDoList[0].comments[0].text).toEqual('hello')
