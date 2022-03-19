@@ -29,6 +29,7 @@
               :text="item.text"
               :date="item.date"
               @removeComments="remove"
+              @editComments="editComment"
             ></card-comments>
           </slot>
         </section>
@@ -84,9 +85,13 @@ export default {
     },
     addComments() {
       this.$store.commit('toDo/COMMENTS', { id: this.id, comments: this.text })
+      this.text = ''
     },
     remove({ id }) {
       this.$store.commit('toDo/DELETE_COMMENTS', { id: this.id, date: id })
+    },
+    editComment({ id, text }) {
+      this.$store.commit('toDo/EDIT_COMMENTS', { date: id, id: this.id, text })
     },
   },
 }
@@ -158,6 +163,10 @@ export default {
       position: relative;
       padding: 20px 10px;
       height: 250px;
+      display: flex;
+      overflow: auto;
+      flex-direction: column;
+      gap: 10px;
     }
   }
 }

@@ -76,4 +76,25 @@ describe('ModalTask', () => {
 
     expect(comments).toHaveLength(1)
   })
+
+  it('should edit comments when edit button is called', async () => {
+    const { wrapper } = mountModalTask({
+      task: true,
+      values: { text: '', edit: false },
+    })
+    const add = wrapper.find('[data-testid="add-comments"]')
+    const input = wrapper.find('[data-testid="input-comments"]')
+    await input.setValue('dasdadadada')
+    await add.trigger('click')
+    const edit = wrapper.find('[data-testid="edit-comments"]')
+    await edit.trigger('click')
+    const inputEdit = wrapper.find('[data-testid="edit-input-comments"]')
+    await inputEdit.setValue('editado')
+    const button = wrapper.find('[data-testid="button-edit-comments"]')
+
+    await button.trigger('click')
+    const text = wrapper.find('[data-testid="text-comments"]')
+
+    expect(text.text()).toEqual('editado')
+  })
 })
