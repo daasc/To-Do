@@ -29,7 +29,13 @@
       >
         Edit
       </button>
-      <button class="button-3 clear">Cancel</button>
+      <button
+        class="button-3 clear"
+        data-testid="cancel-edit"
+        @click="cancel()"
+      >
+        Cancel
+      </button>
     </div>
   </div>
 </template>
@@ -64,6 +70,10 @@ export default {
       this.$emit('editComments', { id: this.id, text: this.textEdit })
       this.edits = false
     },
+    cancel() {
+      this.edits = false
+      this.textEdit = ''
+    },
   },
 }
 </script>
@@ -88,7 +98,8 @@ export default {
 .edit {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
+  gap: 10px;
   .edit-comments {
     width: auto;
     height: 60px;
