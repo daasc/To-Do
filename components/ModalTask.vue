@@ -8,7 +8,7 @@
         aria-describedby="modalDescription"
       >
         <header id="modalTitle" class="modal-header">
-          <slot name="header"> </slot>
+          <slot name="header">Comments</slot>
           <button
             type="button"
             class="btn-close"
@@ -21,19 +21,37 @@
         </header>
 
         <section id="modalDescription" class="modal-body">
-          <slot name="body"> </slot>
+          <slot name="body">
+            <card-comments :text="comentarioas" :date="Mar"></card-comments>
+          </slot>
         </section>
 
         <footer class="modal-footer">
-          <slot name="footer"> </slot>
+          <slot name="footer">
+            <textarea
+              class="add-comments"
+              name=""
+              cols="30"
+              rows="5"
+            ></textarea>
+            <button class="button-3 add">comment</button>
+          </slot>
         </footer>
       </div>
     </div>
   </transition>
 </template>
 <script>
+import CardComments from './CardComments.vue'
 export default {
   name: 'ModalTask',
+  components: { CardComments },
+  props: {
+    id: {
+      type: String,
+      default: '',
+    },
+  },
   methods: {
     close() {
       this.$emit('close')
@@ -52,51 +70,64 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+  .modal {
+    background: #ffffff;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 650px;
+    border-radius: 10px;
+    max-height: 960px;
+    min-height: 400px;
 
-.modal {
-  background: #ffffff;
-  overflow-x: auto;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 650px;
-  border-radius: 10px;
-  max-height: 960px;
-  min-height: 400px;
-}
+    .modal-header,
+    .modal-footer {
+      padding: 15px;
+      display: flex;
+    }
 
-.modal-header,
-.modal-footer {
-  padding: 15px;
-  display: flex;
-}
+    .modal-header {
+      position: relative;
+      justify-content: space-between;
 
-.modal-header {
-  position: relative;
-  justify-content: space-between;
-}
+      .btn-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        border: none;
+        font-size: 30px;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        color: #282525;
+        background: transparent;
+      }
+    }
 
-.modal-footer {
-  flex-direction: column;
-}
-
-.modal-body {
-  position: relative;
-  padding: 20px 10px;
-}
-
-.btn-close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  border: none;
-  font-size: 30px;
-  padding: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  color: #282525;
-  background: transparent;
+    .modal-footer {
+      flex-direction: column;
+      gap: 10px;
+      .add-comments {
+        width: auto;
+        height: 60px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 10px 10px 0;
+        resize: none;
+        outline: none;
+      }
+      .button-3 {
+        width: 20%;
+        align-self: flex-end;
+      }
+    }
+    .modal-body {
+      position: relative;
+      padding: 20px 10px;
+      height: 250px;
+    }
+  }
 }
 
 .modal-fade-enter,

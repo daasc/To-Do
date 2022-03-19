@@ -35,10 +35,10 @@
         :key="index"
         :name="item.name"
         :done="item.done"
-        @open="open()"
+        @open="toOpen"
       ></card-task>
     </div>
-    <modal-task v-show="show" @close="close()"></modal-task>
+    <modal-task v-show="show" :id="choose" @close="close()"></modal-task>
   </div>
 </template>
 <script>
@@ -53,6 +53,7 @@ export default {
       active: false,
       completed: false,
       show: false,
+      choose: '',
     }
   },
   computed: {
@@ -66,11 +67,13 @@ export default {
     },
   },
   methods: {
-    open() {
+    toOpen({ id }) {
       this.show = true
+      this.choose = id
     },
     close() {
       this.show = false
+      this.choose = ''
     },
     allTask() {
       this.all = true
