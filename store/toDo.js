@@ -35,7 +35,9 @@ export const mutations = {
     const index = state.toDoList.findIndex((todo) => todo.id === payload.id)
     state.toDoList[index].comments.push({
       text: payload.comments,
-      date: new Date().getTime(),
+      date: new Date().toLocaleString('pt-BR', {
+        timeZone: 'America/Sao_Paulo',
+      }),
     })
   },
   DELETE_COMMENTS: (state, payload) => {

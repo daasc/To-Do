@@ -22,19 +22,32 @@
 
         <section id="modalDescription" class="modal-body">
           <slot name="body">
-            <card-comments :text="comentarioas" :date="Mar"></card-comments>
+            <card-comments
+              v-for="(item, index) in comments"
+              :key="index"
+              :text="item.text"
+              :date="item.date"
+            ></card-comments>
           </slot>
         </section>
 
         <footer class="modal-footer">
           <slot name="footer">
             <textarea
+              v-model="text"
               class="add-comments"
               name=""
               cols="30"
               rows="5"
+              data-testid="input-comments"
             ></textarea>
-            <button class="button-3 add">comment</button>
+            <button
+              class="button-3 add"
+              data-testid="add-comments"
+              @click="addComments()"
+            >
+              comment
+            </button>
           </slot>
         </footer>
       </div>
@@ -52,9 +65,24 @@ export default {
       default: '',
     },
   },
+  data() {
+    return {
+      text: '',
+    }
+  },
+  computed: {
+    comments() {
+      const task = { ...this.$store.getters['toDo/getId'](this.id) }
+      return task.comments
+    },
+  },
   methods: {
     close() {
       this.$emit('close')
+    },
+    addComments() {
+      console.log('ddd', this.id)
+      this.$store.commit('toDo/COMMENTS', { id: this.id, comments: this.text })
     },
   },
 }

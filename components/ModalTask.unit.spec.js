@@ -3,9 +3,9 @@ import { createLocalVue, mount } from '@vue/test-utils'
 import Vuex from 'vuex'
 import ModalTask from '@/components/ModalTask'
 import { state, mutations, getters } from '@/store/toDo'
-
+import CardComments from '@/components/CardComments.vue'
 describe('ModalTask', () => {
-  const mountModalTask = ({ task = false }) => {
+  const mountModalTask = ({ task = false, values = {} }) => {
     const localVue = createLocalVue()
     localVue.use(Vuex)
     const store = new Vuex.Store({
@@ -20,12 +20,17 @@ describe('ModalTask', () => {
     })
     const propsData = {}
     if (task) {
-      store.commit('toDo/SET_TODOLIST', { name: 'make a cake' })
+      store.commit('toDo/SET_TODOLIST', { name: 'comments' })
       propsData.id = store.state.toDo.toDoList[0].id
     }
     const wrapper = mount(ModalTask, {
       mocks: {
         $store: store,
+      },
+      data() {
+        return {
+          ...values,
+        }
       },
       propsData,
       localVue,
@@ -44,5 +49,17 @@ describe('ModalTask', () => {
 
     expect(wrapper.emitted().close).toBeTruthy()
     expect(wrapper.emitted().close.length).toBe(1)
+  })
+  it('should add comments when click add comments button', async () => {
+    const { wrapper } = mountModalTask({ task: true, values: { text: '' } })
+    const add = wrapper.find('[data-testid="add-comments"]')
+    const input = wrapper.find('[data-testid="input-comments"]')
+    await input.setValue('dasdadadada')
+    await add.trigger('click')
+    let comments = wrapper.findAllComponents(CardComments)
+    expect(comments).toHaveLength(1)
+    await add.trigger('click')
+    comments = wrapper.findAllComponents(CardComments)
+    expect(comments).toHaveLength(2)
   })
 })
