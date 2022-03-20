@@ -30,7 +30,8 @@
               :date="item.date"
               @removeComments="remove"
               @editComments="editComment"
-            ></card-comments>
+            >
+            </card-comments>
           </slot>
         </section>
 

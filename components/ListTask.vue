@@ -95,7 +95,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .active {
-  background-color: #dab88b;
+  background-color: white;
 }
 
 @media (min-width: 0px) {

@@ -30,7 +30,6 @@ describe('CardComments', () => {
       propsData.text = store.state.toDo.toDoList[0].comments[0].text
       propsData.date = store.state.toDo.toDoList[0].comments[0].date
     }
-    console.log(propsData)
     const wrapper = mount(CardComments, {
       mocks: {
         $store: store,

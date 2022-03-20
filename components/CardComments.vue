@@ -1,17 +1,20 @@
 <template>
-  <div v-if="!edits" class="comments">
-    <div class="text">
-      <div class="date">{{ date }}</div>
-      <div data-testid="text-comments">{{ text }}</div>
+  <div v-if="!edits" class="list-comments">
+    <div class="comments">
+      <div class="text">
+        <div class="date">{{ date }}</div>
+        <div class="text-comments" data-testid="text-comments">{{ text }}</div>
+      </div>
+      <div class="actions">
+        <span data-testid="edit-comments" @click="showEdit()">
+          <img src="@/assets/img/editing.png" alt="" />
+        </span>
+        <span data-testid="delete-comments" @click="remove()">
+          <img src="@/assets/img/bin.png" alt="" />
+        </span>
+      </div>
     </div>
-    <div class="actions">
-      <span data-testid="edit-comments" @click="edits = true">
-        <img src="@/assets/img/editing.png" alt="" />
-      </span>
-      <span data-testid="delete-comments" @click="remove()">
-        <img src="@/assets/img/bin.png" alt="" />
-      </span>
-    </div>
+    <hr />
   </div>
   <div v-else class="edit">
     <textarea
@@ -23,14 +26,14 @@
     ></textarea>
     <div class="actions-edit">
       <button
-        class="button-3 add"
+        class="button-3 edit-button"
         data-testid="button-edit-comments"
         @click="setEdit()"
       >
         Edit
       </button>
       <button
-        class="button-3 clear"
+        class="button-3 cancel"
         data-testid="cancel-edit"
         @click="cancel()"
       >
@@ -70,6 +73,10 @@ export default {
       this.$emit('editComments', { id: this.id, text: this.textEdit })
       this.edits = false
     },
+    showEdit() {
+      this.textEdit = this.text
+      this.edits = true
+    },
     cancel() {
       this.edits = false
       this.textEdit = ''
@@ -78,21 +85,32 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.comments {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  .text {
-    width: 90%;
-  }
-  .actions {
-    width: 10%;
+.list-comments {
+  .comments {
     display: flex;
-    justify-content: space-around;
-    img {
-      cursor: pointer;
-      width: 20px;
+    width: 100%;
+    align-items: center;
+    .text {
+      width: 90%;
+      .date {
+        color: #b1b3b4;
+      }
+      .text-comments {
+        padding: 0px 5px;
+      }
     }
+    .actions {
+      width: 10%;
+      display: flex;
+      justify-content: space-around;
+      img {
+        cursor: pointer;
+        width: 20px;
+      }
+    }
+  }
+  hr {
+    border-top: 1px solid #d7dbdd;
   }
 }
 .edit {
