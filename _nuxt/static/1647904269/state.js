@@ -1,0 +1,1 @@
+window.__NUXT__=(function(a){return {staticAssetsBase:"\u002FTo-Do\u002F_nuxt\u002Fstatic\u002F1647904269",layout:"default",error:a,state:{toDo:{toDoList:[]}},serverRendered:true,routePath:"\u002F",config:{_app:{basePath:"\u002FTo-Do\u002F",assetsPath:"\u002FTo-Do\u002F_nuxt\u002F",cdnURL:a}}}}(null));
