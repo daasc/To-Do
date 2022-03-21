@@ -136,4 +136,11 @@ describe('ListTask', () => {
 
     expect(modal.isVisible()).toBe(false)
   })
+
+  it('should show "no task" message when there is no task', () => {
+    const { wrapper } = mountListTask({})
+    const message = wrapper.find('[data-testid="no-task"]')
+    expect(message.exists()).toBe(true)
+    expect(message.text()).toContain('no task')
+  })
 })
