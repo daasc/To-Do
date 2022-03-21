@@ -37,6 +37,8 @@
         :done="item.done"
         @open="toOpen"
       ></card-task>
+
+      <span v-if="!task.length" data-testid="no-task">no task</span>
     </div>
     <modal-task v-show="show" :id="choose" @close="close()"></modal-task>
   </div>
