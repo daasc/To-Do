@@ -1,5 +1,5 @@
 <template>
-  <div class="card-template">
+  <div v-if="!edit" class="card-template">
     <div class="card">
       <div class="card__container">
         <div class="card__check">
@@ -34,7 +34,11 @@
         >
           <img src="@/assets/img/comment.png" alt="" />
         </div>
-        <div class="card__actions__edit">
+        <div
+          class="card__actions__edit"
+          data-testid="button-edit-task"
+          @click="showEdit()"
+        >
           <img src="@/assets/img/editing.png" alt="" />
         </div>
         <div
@@ -47,6 +51,31 @@
       </div>
     </div>
     <hr />
+  </div>
+  <div v-else class="edit">
+    <textarea
+      v-model="textEdit"
+      class="edit-comments"
+      cols="30"
+      rows="10"
+      data-testid="edit-input-task"
+    ></textarea>
+    <div class="actions-edit">
+      <button
+        class="button-3 edit-button"
+        data-testid="edit-task"
+        @click="setEdit()"
+      >
+        Edit
+      </button>
+      <button
+        class="button-3 cancel"
+        data-testid="button-hide-edit-task"
+        @click="hideEdit()"
+      >
+        Cancel
+      </button>
+    </div>
   </div>
 </template>
 <script>
@@ -66,6 +95,12 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      edit: false,
+      textEdit: '',
+    }
+  },
   methods: {
     toDone(id) {
       this.$store.commit('toDo/SET_DONE', id)
@@ -76,10 +111,44 @@ export default {
     open(id) {
       this.$emit('open', { id })
     },
+    showEdit() {
+      this.edit = true
+      this.textEdit = this.name
+    },
+    hideEdit() {
+      this.edit = false
+    },
+    setEdit() {
+      this.$store.commit('toDo/EDIT_TODOLIST', {
+        id: this.id,
+        name: this.textEdit,
+      })
+      this.hideEdit()
+    },
   },
 }
 </script>
 <style lang="scss" scoped>
+.edit {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  .edit-comments {
+    width: auto;
+    height: 60px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px 10px 0;
+    resize: none;
+    outline: none;
+  }
+  .actions-edit {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+}
 .text-done {
   text-decoration: line-through;
 }

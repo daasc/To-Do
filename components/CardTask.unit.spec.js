@@ -6,7 +6,7 @@ import CardTask from '@/components/CardTask'
 import { state, mutations, getters } from '@/store/toDo'
 
 describe('CardTask', () => {
-  const mountCardTask = async ({ task = false }) => {
+  const mountCardTask = async ({ task = false, values = {} }) => {
     const localVue = createLocalVue()
     localVue.use(Vuex)
     const store = new Vuex.Store({
@@ -32,6 +32,11 @@ describe('CardTask', () => {
       },
       propsData,
       localVue,
+      data() {
+        return {
+          ...values,
+        }
+      },
     })
     return { store, wrapper }
   }
@@ -64,5 +69,34 @@ describe('CardTask', () => {
     expect(wrapper.emitted().open[0]).toEqual([
       { id: store.state.toDo.toDoList[0].id },
     ])
+  })
+
+  it('should edit task when click edit button', async () => {
+    const { wrapper, store } = await mountCardTask({
+      task: true,
+      values: { edit: false, textEdit: '' },
+    })
+    const buttonEdit = wrapper.find('[data-testid="button-edit-task"]')
+    await buttonEdit.trigger('click')
+    const input = wrapper.find('[data-testid="edit-input-task"]')
+    expect(wrapper.vm.$data.edit).toBe(true)
+    await input.setValue('novo valor editado')
+    const edit = wrapper.find('[data-testid="edit-task"]')
+    await edit.trigger('click')
+    expect(wrapper.vm.$data.edit).toBe(false)
+    expect(store.state.toDo.toDoList[0].name).toContain('novo valor editado')
+  })
+
+  it('should hide the task edit', async () => {
+    const { wrapper } = await mountCardTask({
+      task: true,
+      values: { edit: false, textEdit: '' },
+    })
+    const buttonEdit = wrapper.find('[data-testid="button-edit-task"]')
+    await buttonEdit.trigger('click')
+    expect(wrapper.vm.$data.edit).toBe(true)
+    const buttonHide = wrapper.find('[data-testid="button-hide-edit-task"]')
+    await buttonHide.trigger('click')
+    expect(wrapper.vm.$data.edit).toBe(false)
   })
 })
