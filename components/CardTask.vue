@@ -129,112 +129,214 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.edit {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 10px;
-  .edit-comments {
-    width: auto;
-    height: 60px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 10px 10px 0;
-    resize: none;
-    outline: none;
-  }
-  .actions-edit {
+@media (min-width: 0px) {
+  .edit {
     display: flex;
+    flex-direction: column;
+    width: 100%;
     gap: 10px;
-    justify-content: flex-end;
-  }
-}
-.text-done {
-  text-decoration: line-through;
-}
-.card-template {
-  display: flex;
-  flex-direction: column;
-  hr {
-    width: 100%;
-  }
-  .card {
-    width: 100%;
-    display: flex;
-    min-height: 40px;
-    justify-content: space-between;
-    .card__container {
-      width: 80%;
-      padding: 10px;
+    .edit-comments {
+      width: auto;
+      height: 60px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px 10px 0;
+      resize: none;
+      outline: none;
+    }
+    .actions-edit {
       display: flex;
-      align-items: center;
-      .card__check {
-        input[type='checkbox'] {
-          display: none;
-          + label {
-            color: #333;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+  }
+  .text-done {
+    text-decoration: line-through;
+  }
+  .card-template {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    hr {
+      width: 100%;
+    }
+    .card {
+      width: 100%;
+      display: flex;
+      min-height: 40px;
+      justify-content: space-between;
+      .card__container {
+        width: 80%;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        .card__check {
+          input[type='checkbox'] {
+            display: none;
+            + label {
+              color: #333;
+              font-family: Arial, sans-serif;
+              font-size: 14px;
 
-            span {
-              display: inline-block;
-              width: 20px;
-              height: 20px;
-              margin: -1px 4px 0 0;
-              vertical-align: middle;
-              cursor: pointer;
-              border-radius: 50%;
-              border: 2px solid #ffffff;
-              background-repeat: no-repeat;
-              background-position: center;
-              text-align: center;
-              line-height: 25px;
+              span {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                margin: -1px 4px 0 0;
+                vertical-align: middle;
+                cursor: pointer;
+                border-radius: 50%;
+                border: 2px solid #ffffff;
+                background-repeat: no-repeat;
+                background-position: center;
+                text-align: center;
+                line-height: 25px;
 
-              img {
-                opacity: 0;
-                transition: all 0.3s ease;
+                img {
+                  opacity: 0;
+                  transition: all 0.3s ease;
+                }
               }
             }
-          }
 
-          &#color-1 + label span {
-            background-color: #c8c8c8;
+            &#color-1 + label span {
+              background-color: #c8c8c8;
+            }
+            &.checked + label span {
+              background-color: #2ecc71 !important;
+            }
+            &.checked + label span img {
+              opacity: 1;
+              width: 15px;
+            }
           }
-          &.checked + label span {
-            background-color: #2ecc71 !important;
-          }
-          &.checked + label span img {
-            opacity: 1;
-            width: 15px;
+        }
+        .card__name {
+          width: 80%;
+          font-size: 18px;
+        }
+      }
+      .card__actions {
+        display: flex;
+        width: 20%;
+        align-items: center;
+        justify-content: space-around;
+        .card__actions__comments,
+        .card__actions__edit,
+        .card__actions__delete {
+          cursor: pointer;
+          width: 20px;
+          img {
+            width: 100%;
           }
         }
       }
-      .card__name {
-        width: 80%;
-        font-size: 18px;
-      }
     }
-    .card__actions {
-      display: flex;
-      visibility: hidden;
-      width: 20%;
-      align-items: center;
-      justify-content: space-around;
-      .card__actions__comments,
-      .card__actions__edit,
-      .card__actions__delete {
-        cursor: pointer;
-        width: 30px;
-        img {
-          width: 100%;
+    &:hover {
+      .card {
+        .card__actions {
+          visibility: inherit;
         }
       }
     }
   }
-  &:hover {
+}
+@media (min-width: 1200px) {
+  .edit {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    .edit-comments {
+      width: auto;
+      height: 60px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px 10px 0;
+      resize: none;
+      outline: none;
+    }
+    .actions-edit {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+  }
+  .text-done {
+    text-decoration: line-through;
+  }
+  .card-template {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    hr {
+      width: 100%;
+    }
     .card {
+      width: 100%;
+      display: flex;
+      min-height: 40px;
+      justify-content: space-between;
+      .card__container {
+        width: 80%;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        .card__check {
+          input[type='checkbox'] {
+            display: none;
+            + label {
+              color: #333;
+              font-family: Arial, sans-serif;
+              font-size: 14px;
+
+              span {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                margin: -1px 4px 0 0;
+                vertical-align: middle;
+                cursor: pointer;
+                border-radius: 50%;
+                border: 2px solid #ffffff;
+                background-repeat: no-repeat;
+                background-position: center;
+                text-align: center;
+                line-height: 25px;
+
+                img {
+                  opacity: 0;
+                  transition: all 0.3s ease;
+                }
+              }
+            }
+
+            &#color-1 + label span {
+              background-color: #c8c8c8;
+            }
+            &.checked + label span {
+              background-color: #2ecc71 !important;
+            }
+            &.checked + label span img {
+              opacity: 1;
+              width: 15px;
+            }
+          }
+        }
+        .card__name {
+          width: 80%;
+          font-size: 18px;
+        }
+      }
       .card__actions {
-        visibility: inherit;
+        visibility: hidden;
+      }
+    }
+    &:hover {
+      .card {
+        .card__actions {
+          visibility: inherit;
+        }
       }
     }
   }
