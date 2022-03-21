@@ -109,7 +109,7 @@ export default {
     margin-top: 10px;
     .filter {
       display: flex;
-      width: 40%;
+      width: 90%;
       margin: 0 auto;
       justify-content: space-around;
 
@@ -131,13 +131,13 @@ export default {
       }
     }
     hr {
-      width: 40%;
+      width: 90%;
     }
     .list__card {
       display: flex;
       flex-direction: column;
       align-self: center;
-      width: 80%;
+      width: 90%;
       gap: 15px;
 
       .list__card__qtd {
@@ -151,6 +151,12 @@ export default {
 @media (min-width: 1200px) {
   .list {
     .list__card {
+      width: 40%;
+    }
+    .filter {
+      width: 40%;
+    }
+    hr {
       width: 40%;
     }
   }

@@ -60,7 +60,7 @@ export default {
     .group-input {
       display: flex;
       flex-direction: column;
-      width: 80%;
+      width: 90%;
       gap: 5px;
       .add-task {
         width: auto;
